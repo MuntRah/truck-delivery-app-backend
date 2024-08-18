@@ -2,15 +2,19 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const DriverSchema = mongoose.Schema({
-  driver: { type: Boolean, required: true },
   orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
 
-  action: {
+  status: {
     type: String,
-    enum: ["accepted", "rejected"],
-    default: "pending",
+    enum: ["available", "busy"],
+    default: "busy",
     required: true,
   },
+  driverLicence:{
+    type: String,
+    required: false,
+  },
+
 });
 
 module.exports = mongoose.model("Driver", DriverSchema);
