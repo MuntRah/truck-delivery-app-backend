@@ -10,15 +10,15 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   customer:{
-    type:Schema.Types.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     ref:"Customer"
   },
   driver:{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref:"Driver"
   },
 
-  isAdmin : boolean
+  isAdmin : Boolean
 
 
 });
