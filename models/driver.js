@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const DriverSchema = mongoose.Schema({
   driver: { type: Boolean, required: true },
