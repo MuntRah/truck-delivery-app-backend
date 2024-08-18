@@ -4,11 +4,10 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const testJWTRouter = require('./controllers/test-jwt');
 const usersRouter = require('./controllers/users');
 const profilesRouter = require('./controllers/profiles');
 const orderRouter = require('./controllers/order')
-
+const customerRouter = require('./controllers/customer')
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -19,10 +18,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes go here
-app.use('/test-jwt', testJWTRouter);
 app.use('/users', usersRouter);
 app.use('/profiles', profilesRouter);
-app.use('/Order', orderRouter)
+app.use('/order', orderRouter)
+app.use('/customer',customerRouter)
 
 Port = process.env.PORT
 app.listen(Port?Port:3000, () => {
