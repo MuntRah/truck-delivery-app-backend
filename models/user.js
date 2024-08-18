@@ -9,6 +9,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  customer:{
+    type:Schema.Types.ObjectId,
+    ref:"Customer"
+  },
+  driver:{
+    type: Schema.Types.ObjectId,
+    ref:"Driver"
+  },
+
+  isAdmin : boolean
+
+
 });
 
 
