@@ -4,17 +4,11 @@ const Order = require('../models/order');
 
 router.post('/orders', async (req, res) => {
     try {
-        const { from, to, price } = req.body;
-        const customerId = req.user._id;
-        const order = new Order({ 
-          from, 
-          to, 
-          price,
-           customer: customerId });
+        const order = await order.create(req.body)      
         await order.save();
-        res.status(201).send(order);
+        res.status(201).json(order);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     }
 });
 
@@ -25,11 +19,11 @@ router.get('/orders/:orderId', async (req, res) => {
           
           return
           (
-          res.status(404).send({ error: 'order not found' })
+          res.status(404).json({ error: 'order not found' })
         )
         res.send(order);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     }
 });
 
@@ -39,12 +33,12 @@ router.put('/orders/:orderId', async (req, res) => {
         if (!order) 
           return (
         
-            res.status(404).send(error)
+            res.status(404).json(error)
         
       )
         res.send(order);
     } catch (error) {
-        res.status(400).send( error)
+        res.status(400).json( error)
     }
 });
 
@@ -54,27 +48,29 @@ router.delete('/orders/:orderId', async (req, res) => {
         if (!order) 
           
           return (
-            res.status(404).send({ error: 'order not found' })
+            res.status(404).json({ error: 'order not found' })
           )
-        
-        res.send({ message: 'deleted' });
+        else{
+            res.send({ message: 'deleted' });
+        }
+       
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     }
 });
 
 router.get('/orders', async (req, res) => {
     try {
         const customerId = req.user._id;
-        const orders = await Order.find({ customer: customerId });
+        const orders = await Order.findById( customerId );
         if (orders.length === 0) 
           return (
-            res.status(404).send(error)
+            res.status(404).json(error)
         )
 
         res.send(orders);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json(error);
     }
 });
 
