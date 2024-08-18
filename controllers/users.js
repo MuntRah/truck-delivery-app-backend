@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+
+//models
+const User = require("../models/user");
 const Driver = require("../models/driver");
-const driver = require("../models/driver");
-const SALT_LENGTH = 12;
+const Customer = require("../models/customer")
+const SALT_LENGTH = Number(process.env.SALT_ROUNDS);
 
 router.post("/signup", async (req, res) => {
   try {
@@ -14,9 +16,11 @@ router.post("/signup", async (req, res) => {
     if (userInDatabase) {
       return res.json({ error: "Username already taken." });
     }
+    const newCustomer = await Customer.create({})
     const user = await User.create({
       username: req.body.username,
       hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
+      customer:newCustomer._id
     });
     const token = jwt.sign(
       { username: user.username, _id: user._id },
