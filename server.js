@@ -24,7 +24,7 @@ app.use('/users', usersRouter);
 app.use('/profiles', profilesRouter);
 app.use('/Order', orderRouter)
 
-
-app.listen(3000, () => {
+Port = process.env.PORT
+app.listen(Port?Port:3000, () => {
     console.log('The express app is ready!');
 });
