@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require('../models/order');
 const verifyToken = require("../middleware/verify-token");
 const user = require('../models/user');
+const customer = require('../models/customer');
 
 
 router.post('/orders',verifyToken, async (req, res) => {
@@ -10,6 +11,7 @@ router.post('/orders',verifyToken, async (req, res) => {
        const order = await Order.create({
         from: req.body.from,
         to:req.body.to,
+
         customer:req.user._id
 
        })
@@ -22,12 +24,12 @@ router.post('/orders',verifyToken, async (req, res) => {
     }
 });
 
-router.get('/orders', async (req, res) => {
+router.get('/orders',verifyToken, async (req, res) => {
     try {
-        const orders = await Order.find(); 
+        const orders = await Order.find({customer:req.user._id}); 
         res.send(orders);
     } catch (error) {
-        res.status(400).json({ error: 'error' });
+        res.status(400).json({error});
     }
 });
 

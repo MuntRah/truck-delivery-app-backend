@@ -6,6 +6,11 @@ const { Schema } = mongoose;
 const OrderSchema = mongoose.Schema({
   from: { type: String, required: true },
   to: { type: String, required: true },
+  veichle:{
+    type:String,
+    enum: ['sedan', 'suv', 'truck'],
+    default: 'sedan'
+   },
   price: { type: Number , default: 50 },
   orderStatus: {
     type: String,
