@@ -33,13 +33,13 @@ router.get('/orders',verifyToken, async (req, res) => {
     }
 });
 
-router.get('/orders/:orderId', async (req, res) => {
+router.get('/orders/:orderId', verifyToken, async (req, res) => {
     try {
         const { orderId } = req.params;
         const order = await Order.findById(orderId);
         if (!order) 
           return (res.status(404).json({ error: 'not found' }))
-        res.json({ action: order.action, orderStatus: order.orderStatus });
+        res.json(order);
     } catch (error) {
         res.status(400).json({ error: 'error' });
     }
@@ -61,9 +61,11 @@ router.get('/orders/customer/:customerId', async (req, res) => {
 router.put('/orders/:orderId', async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.params.orderId, req.body);
-        if (!order) 
-          return( res.status(404).json({ error: 'not found' }))
-        res.status(order);
+        if (!order) {
+         return( res.status(404).json({ error: 'not found' }))
+        }
+
+        res.status(200).json(order);
     } catch (error) {
         res.status(400).json({ error: 'error' });
     }
