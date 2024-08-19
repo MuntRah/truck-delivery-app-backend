@@ -58,7 +58,7 @@ router.get('/orders/customer/:customerId', async (req, res) => {
     }
 });
 
-router.put('/orders/:orderId', async (req, res) => {
+router.put('/orders/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.params.orderId, req.body);
         if (!order) {
@@ -71,7 +71,7 @@ router.put('/orders/:orderId', async (req, res) => {
     }
 });
 
-router.delete('/orders/:orderId', async (req, res) => {
+router.delete('/orders/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndDelete(req.params.orderId);
         if (!order) 
