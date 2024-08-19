@@ -20,6 +20,7 @@ app.use(express.json());
 app.use(morgan('dev'))
 // Routes go here
 app.use('/users', usersRouter);
+
 app.use('/profiles', profilesRouter);
 app.use('/order', orderRouter)
 app.use('/customer',customerRouter)

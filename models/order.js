@@ -10,8 +10,8 @@ const OrderSchema = mongoose.Schema({
 
   orderStatus: {
     type: String,
-    enum: ['delivered', 'onWay', 'preparing'],
-    required: true
+    enum: ['pending', 'on the way', 'deliverd' , 'rejected'],
+    default: 'pending'
   },
   customer:  {type: Schema.Types.ObjectId, ref: "Customer" },
   driver: { type: Schema.Types.ObjectId, ref: "Driver" },

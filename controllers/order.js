@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/order');
-const order = require('../models/order');
+const verifyToken = require("../middleware/verify-token");
 
-router.post('/orders', async (req, res) => {
+
+router.post('/orders',verifyToken, async (req, res) => {
     try {
-       const order = await order.create(req.body)
+       const order = await Order.create(req.body)
    
         
         res.status(201).json(order);
     } catch (error) {
-        res.status(400).json({ error: 'error' });
+        res.status(400).json({error});
     }
 });
 
