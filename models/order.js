@@ -7,7 +7,6 @@ const OrderSchema = mongoose.Schema({
   from: { type: String, required: true },
   to: { type: String, required: true },
   price: { type: Number , default: 50 },
-
   orderStatus: {
     type: String,
     enum: ['pending', 'on the way', 'deliverd' , 'rejected'],

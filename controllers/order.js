@@ -2,11 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/order');
 const verifyToken = require("../middleware/verify-token");
+const user = require('../models/user');
 
 
 router.post('/orders',verifyToken, async (req, res) => {
     try {
-       const order = await Order.create(req.body)
+       const order = await Order.create({
+        from: req.body.from,
+        to:req.body.to,
+        customer:req.user._id
+
+       })
+       console.log(user);
    
         
         res.status(201).json(order);
