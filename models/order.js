@@ -8,8 +8,8 @@ const OrderSchema = mongoose.Schema({
   to: { type: String, required: true },
   vehicle:{
     type:String,
-    enum: ['sedan', 'suv', 'truck'],
-    default: 'sedan'
+    enum: ['Sedan', 'SUV', 'Truck'],
+    default: 'Sedan'
    },
   price: { type: Number , default: 50 },
   orderStatus: {
