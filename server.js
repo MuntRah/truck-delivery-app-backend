@@ -5,10 +5,13 @@ const express = require('express');
 const morgan =require('morgan');
 const app = express();
 const mongoose = require('mongoose');
+
+// routers
 const usersRouter = require('./controllers/users');
 const profilesRouter = require('./controllers/profiles');
-const orderRouter = require('./controllers/order')
-const customerRouter = require('./controllers/customer')
+const orderRouter = require('./controllers/order');
+const customerRouter = require('./controllers/customer');
+const loadsRouter = require('./controllers/loads');
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -22,8 +25,9 @@ app.use(morgan('dev'))
 app.use('/users', usersRouter);
 
 app.use('/profiles', profilesRouter);
-app.use('/order', orderRouter)
-app.use('/customer',customerRouter)
+app.use('/orders', orderRouter);
+app.use('/customer',customerRouter);
+app.use('/loads', loadsRouter);
 
 Port = process.env.PORT
 app.listen(Port?Port:3000, () => {

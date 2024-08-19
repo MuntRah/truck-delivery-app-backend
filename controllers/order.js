@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/order');
 const verifyToken = require("../middleware/verify-token");
-const user = require('../models/user');
-const customer = require('../models/customer');
+const User = require('../models/user');
+const Customer = require('../models/customer');
 
 
-router.post('/orders',verifyToken, async (req, res) => {
+router.post('/',verifyToken, async (req, res) => {
     try {
        const order = await Order.create({
         from: req.body.from,
@@ -15,7 +15,7 @@ router.post('/orders',verifyToken, async (req, res) => {
         customer:req.user._id
 
        })
-       console.log(user);
+       const customer = await Customer.findByIdAndUpdate(order.customer)
    
         
         res.status(201).json(order);
@@ -24,7 +24,7 @@ router.post('/orders',verifyToken, async (req, res) => {
     }
 });
 
-router.get('/orders',verifyToken, async (req, res) => {
+router.get('/',verifyToken, async (req, res) => {
     try {
         const orders = await Order.find({customer:req.user._id}); 
         res.send(orders);
@@ -33,7 +33,7 @@ router.get('/orders',verifyToken, async (req, res) => {
     }
 });
 
-router.get('/orders/:orderId', verifyToken, async (req, res) => {
+router.get('/:orderId', verifyToken, async (req, res) => {
     try {
         const { orderId } = req.params;
         const order = await Order.findById(orderId);
@@ -45,20 +45,7 @@ router.get('/orders/:orderId', verifyToken, async (req, res) => {
     }
 });
 
-router.get('/orders/customer/:customerId', async (req, res) => {
-    try {
-        const { customerId } = req.params;
-        const orders = await Order.find({ customer: customerId });
-        if (orders.length === 0) 
-          return(  res.status(404).json({ error: 'not found' }))
-    
-        res.json(orders);
-    } catch (error) {
-        res.status(400).json({ error: 'error' });
-    }
-});
-
-router.put('/orders/:orderId',verifyToken, async (req, res) => {
+router.put('/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.params.orderId, req.body);
         if (!order) {
@@ -71,7 +58,7 @@ router.put('/orders/:orderId',verifyToken, async (req, res) => {
     }
 });
 
-router.delete('/orders/:orderId',verifyToken, async (req, res) => {
+router.delete('/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndDelete(req.params.orderId);
         if (!order) 
@@ -82,5 +69,18 @@ router.delete('/orders/:orderId',verifyToken, async (req, res) => {
         res.status(400).json({ error: 'rrror' });
     }
 });
+
+// router.get('/orders/customer/:customerId', async (req, res) => {
+//     try {
+//         const { customerId } = req.params;
+//         const orders = await Order.find({ customer: customerId });
+//         if (orders.length === 0) 
+//           return(  res.status(404).json({ error: 'not found' }))
+    
+//         res.json(orders);
+//     } catch (error) {
+//         res.status(400).json({ error: 'error' });
+//     }
+// });
 
 module.exports = router;
