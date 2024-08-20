@@ -81,7 +81,7 @@ router.post("/driver-signin", async (req, res) => {
     
     if (user.driver && bcrypt.compareSync(req.body.password, user.hashedPassword)) {
       const token = jwt.sign(
-        { username: user.username, _id: user._id },
+        { username: user.username, _id: user._id, driver: user.driver },
         process.env.JWT_SECRET
       );
       res.status(200).json({ token });
