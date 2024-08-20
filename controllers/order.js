@@ -25,6 +25,7 @@ router.get('/',verifyToken, async (req, res) => {
         res.status(400).json({error});
     }
 });
+
 router.get('/:orderId', verifyToken, async (req, res) => {
     try {
         const { orderId } = req.params;
@@ -36,6 +37,7 @@ router.get('/:orderId', verifyToken, async (req, res) => {
         res.status(400).json({ error: 'error' });
     }
 });
+
 router.put('/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndUpdate(req.params.orderId, req.body);
@@ -47,6 +49,7 @@ router.put('/:orderId',verifyToken, async (req, res) => {
         res.status(400).json({ error: 'error' });
     }
 });
+
 router.delete('/:orderId',verifyToken, async (req, res) => {
     try {
         const order = await Order.findByIdAndDelete(req.params.orderId);
