@@ -14,7 +14,7 @@ const OrderSchema = mongoose.Schema({
   price: { type: Number , default: 50 },
   orderStatus: {
     type: String,
-    enum: ['pending', 'accepted', 'on the way', 'delivered' , 'rejected'],
+    enum: ['pending', 'accepted', 'on the way', 'deliverd' , 'rejected'],
     default: 'pending'
   },
   customer:  {type: Schema.Types.ObjectId, ref: "Customer" },

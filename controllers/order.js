@@ -4,11 +4,15 @@ const Order = require('../models/order');
 const verifyToken = require("../middleware/verify-token");
 const User = require('../models/user');
 const Customer = require('../models/customer');
+
+
 router.post('/',verifyToken, async (req, res) => {
     try {
        const order = await Order.create({
         from: req.body.from,
         to:req.body.to,
+        vehicle:req.body.vehicle,
+        price:req.body.price,
         customer:req.user._id
        })
        const customer = await Customer.findByIdAndUpdate(order.customer)
