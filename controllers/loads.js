@@ -24,7 +24,7 @@ router.get("/:loadId", async (req, res) => {
   }
 });
 
-router.post("/:loadId", verifyToken, async (req, res) => {
+router.put("/:loadId", verifyToken, async (req, res) => {
   try {
     const action  = req.body;
     const driver = req.user._id;
